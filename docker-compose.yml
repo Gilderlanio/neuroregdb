@@ -1,0 +1,25 @@
+services:
+  regulondb:
+    build: .
+    container_name: regulondb_app
+    restart: always
+    ports:
+      - "127.0.0.1:8505:8505"
+    working_dir: /app
+    command: >
+      streamlit run app.py
+      --server.address=0.0.0.0
+      --server.port=8505
+      --server.headless true
+      --server.enableCORS false
+      --server.enableXsrfProtection false
+      --browser.gatherUsageStats false
+      --server.baseUrlPath=/regulondb
+    volumes:
+      - ./degs:/app/degs
+      - ./go:/app/go
+      - ./images:/app/images
+      - ./lib:/app/lib
+      - ./supporting:/app/supporting
+    environment:
+      - TZ=America/Belem
